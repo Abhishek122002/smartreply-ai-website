@@ -1,0 +1,57 @@
+[
+  {
+    "id": "a5a370ca-7218-4f91-a0bb-5c6177b8ed59",
+    "name": "Abhishek Paul",
+    "email": "abhishekpaul491@gmail.com",
+    "password": "$2b$10$ZsXIdY/qhULV.PHygaFG1.SCrIom7fgHSYoME3DwsolbKfKFoRxWO",
+    "createdAt": 1766758744859,
+    "freeUsage": {
+      "date": "Tue Dec 30 2025",
+      "count": 0
+    }
+  },
+  {
+    "id": "5b93e242-32bc-47aa-b94d-0d340ab29679",
+    "name": "Goku",
+    "email": "abhipaul101@gmail.com",
+    "password": "$2b$10$01LdNlGVrWESUlmEWTviy.grmAQMuJqG6jnYvlXuAgB96GMLJFM5.",
+    "createdAt": 1766758798679,
+    "freeUsage": {
+      "date": "Sat Dec 27 2025",
+      "count": 2
+    }
+  },
+  {
+    "id": "ec89e1e3-aac3-4852-862e-dde734a149a3",
+    "name": "Abhishek Paul",
+    "email": "paulabhishek202@gmail.com",
+    "password": "$2b$10$zBRJxAq36rW9fhviQYGD4.QQwtfYPXQ9hTXAw3x62zbJ/nCR0wI6m",
+    "createdAt": 1766765407060,
+    "freeUsage": {
+      "date": "Mon Jan 19 2026",
+      "count": 0
+    }
+  },
+  {
+    "id": "39b5e51b-7c81-4d33-8510-d9c9854f0aa3",
+    "name": "Gohan",
+    "email": "gokuxvegeta6574@gmail.com",
+    "password": "$2b$10$6kUleQJQY/kMVyNcdwpT8erDZzR5syLFdgW9.AVUR/D9mrtWRu2Fe",
+    "createdAt": 1766825979198,
+    "freeUsage": {
+      "date": "Sat Dec 27 2025",
+      "count": 10
+    }
+  },
+  {
+    "id": "49d8af6d-21e6-4c15-9842-81a765c6153e",
+    "name": "Raiden",
+    "email": "raiden0000123@gmail.com",
+    "password": "$2b$10$7OacgIzYNg/aUJNdmc.EfuerbHvD5uAYfeXZqfyFbP4e29FjlhqEC",
+    "createdAt": 1766838323260,
+    "freeUsage": {
+      "date": "Tue Dec 30 2025",
+      "count": 8
+    }
+  }
+]

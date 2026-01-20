@@ -134,7 +134,7 @@ export default function OutputPanel({
         <button
           onClick={handleCopy}
           disabled={!generatedContent}
-          className="w-full py-2.5 rounded-lg bg-blue-600 text-white font-medium"
+          className="w-full py-2.5 bg-[rgb(79,71,230)] text-white rounded-lg font-medium"
         >
           Copy to clipboard
         </button>

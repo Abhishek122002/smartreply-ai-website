@@ -98,7 +98,7 @@ const Available = Math.max(FREE_LIMIT - conversationCount, 0);
         <div className="flex items-center justify-between mb-2">
           <label className="font-medium">Reply for</label>
 
-          <label className="text-sm text-blue-600 cursor-pointer">
+          <label className="text-sm text-#4f46e6 cursor-pointer">
             Upload image
             <input
               type="file"
@@ -160,13 +160,13 @@ const Available = Math.max(FREE_LIMIT - conversationCount, 0);
           className="w-full border rounded-lg px-3 py-2 mb-4"
         />
 
-        <button
-          onClick={onGenerate}
-          disabled={isGenerating}
-          className="w-full py-2.5 bg-blue-600 text-white rounded-lg font-medium"
-        >
-          {isGenerating ? "Generating..." : "Generate Reply"}
-        </button>
+       <button
+  onClick={onGenerate}
+  disabled={isGenerating}
+  className="w-full py-2.5 bg-[rgb(79,71,230)] text-white rounded-lg font-medium"
+>
+  {isGenerating ? "Generating..." : "Generate Reply"}
+</button>
 
         {/* PROGRESS */}
         {/* PROGRESS */}

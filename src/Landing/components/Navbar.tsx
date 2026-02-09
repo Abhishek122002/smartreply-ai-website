@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Zap } from 'lucide-react';
+import DoDraftLogo from '../../assets/DoDraft.png';
+
+
+
+
 import { Button } from './Button';
 
 interface NavbarProps {
@@ -20,14 +24,18 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenEditor }) => {
       scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm border-b border-slate-100 py-3' : 'bg-transparent py-5'
     }`}>
       <div className="container mx-auto px-4 sm:px-6 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="bg-indigo-600 p-1.5 rounded-lg">
-            <Zap className="w-4 h-4 text-white" fill="currentColor" />
-          </div>
-          <span className={`font-bold text-lg tracking-tight ${scrolled ? 'text-slate-900' : 'text-slate-900'}`}>
-            SmartReply
-          </span>
-        </div>
+       <div className="flex items-center gap-2">
+  <img
+    src={DoDraftLogo}
+    alt="DoDraft Logo"
+    className="h-8 w-auto"
+  />
+
+  <span className="font-bold text-xl tracking-tight text-slate-900">
+    DoDraft
+  </span>
+</div>
+
         
         <div className="flex items-center gap-4">
           {/* <Button 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowRight, Download, Zap, Search, Settings, ChevronDown } from 'lucide-react';
+import { ArrowRight, Download, Zap, Search, Settings, ChevronDown, ArrowUpRight } from 'lucide-react';
 import { Button } from './Button';
 
 interface HeroProps {
@@ -106,19 +106,35 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEditor }) => {
           </p>
           
           {/* CTAs */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto mt-2">
+        
             
             
-            <div className="relative">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm z-10 whitespace-nowrap border-2 border-white">
-                Recommended
-              </div>
-              <Button variant="secondary" size="lg" className="w-full sm:w-auto h-12 px-8 bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900">
-                <Download className="mr-2 w-4 h-4 text-slate-400 group-hover:text-slate-600" />
-                Download Extension
-              </Button>
-            </div>
-          </div>
+           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
+  {/* Open Editor – FIRST */}
+  <Button
+    size="lg"
+    className="w-full sm:w-auto h-12 px-8 text-white bg-[rgb(79,71,230)] hover:bg-[rgb(69,61,210)]"
+    onClick={() => {
+      localStorage.removeItem("auth_token");
+      localStorage.removeItem("user");
+      localStorage.removeItem("sr_auth_token");
+      window.location.href = "/app";
+    }}
+  >
+    Open Editor <ArrowUpRight className="ml-2 w-4 h-4" />
+  </Button>
+
+  {/* Download Extension – SECOND */}
+  <Button
+    variant="secondary"
+    size="lg"
+    className="w-full sm:w-auto h-12 px-8 bg-white border-slate-200 text-slate-700 hover:bg-slate-50 hover:text-slate-900"
+  >
+    <Download className="mr-2 w-4 h-4 text-slate-400" />
+    Download Extension
+  </Button>
+</div>
+
         </motion.div>
 
         {/* Product Preview - Cut in half with gradient */}

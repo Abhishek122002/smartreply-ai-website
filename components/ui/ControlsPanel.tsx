@@ -75,10 +75,10 @@ export default function ControlsPanel({
   /* ================= DESKTOP (INLINE – UNCHANGED) ================= */
   if (!isMobile) {
     return (
-      <div className="rounded-xl border border-gray-300 bg-white overflow-hidden">
-        <button style={{ height: "auto" }}
+      <div className=" rounded-xl border border-gray-300 bg-white overflow-hidden">
+        <button style={{ height: "100%" }}
           onClick={togglePanel}
-          className="w-full flex justify-between items-center px-4 py-3 font-semibold bg-gray-50"
+          className="w-full  flex justify-between items-center px-4 py-3 font-semibold bg-gray-50"
         >
           <span className="flex items-center gap-2">
             <span>⚙️</span>

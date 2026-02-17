@@ -93,7 +93,7 @@ export const Audience: React.FC<AudienceProps> = ({ onOpenEditor }) => {
 
           <div className="relative z-10 max-w-3xl mx-auto">
             <h3 className="text-2xl md:text-3xl font-bold text-white mb-10 leading-snug">
-              Whether you're closing deals or putting out fires SmartReply keeps your replies clear and confident.
+              Whether you're closing deals or putting out fires DoDraft keeps your replies clear and confident.
             </h3>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                {/* Fixed button: using variant secondary ensures correct text/bg contrast */}

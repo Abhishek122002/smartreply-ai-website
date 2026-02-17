@@ -14,7 +14,7 @@ export const ExtensionSection = () => {
             >
               <h2 className="text-3xl font-bold text-slate-900 mb-6">Replies where conversations actually happen.</h2>
               <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                Most tools pull you out of context. SmartReply stays where you're already talking.
+                Most tools pull you out of context. DoDraft stays where you're already talking.
                 Select the message → generate reply → send. No copying. No tab switching.
               </p>
               
@@ -53,7 +53,7 @@ export const ExtensionSection = () => {
                         <div className="w-6 h-6 bg-indigo-600 rounded-md flex items-center justify-center">
                           <Zap className="w-3 h-3 text-white" />
                         </div>
-                        <span className="font-bold text-sm text-slate-800">SmartReply</span>
+                        <span className="font-bold text-sm text-slate-800">DoDraft</span>
                       </div>
                       <div className="h-2 bg-slate-100 rounded w-full mb-2"></div>
                       <div className="h-2 bg-slate-100 rounded w-2/3"></div>

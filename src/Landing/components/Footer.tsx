@@ -10,7 +10,7 @@ export const Footer = () => {
           Reply Less. <span className="text-indigo-400">Sound Better.</span>
         </h2>
         <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto">
-          Stop rewriting. Stop second-guessing. Let SmartReply handle the phrasing—so you can focus on the conversation.
+          Stop rewriting. Stop second-guessing. Let DoDraft handle the phrasing—so you can focus on the conversation.
         </p>
         
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
@@ -34,7 +34,7 @@ export const Footer = () => {
 
         <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row items-center justify-between text-slate-500 text-sm">
           <div className="mb-4 md:mb-0">
-            &copy; {new Date().getFullYear()} SmartReply. All rights reserved.
+            &copy; {new Date().getFullYear()} DoDraft. All rights reserved.
           </div>
           <div className="flex gap-6">
             <span>No login required</span>

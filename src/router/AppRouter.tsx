@@ -13,7 +13,7 @@ export default function AppRouter() {
         {/* Landing page */}
         <Route path="/" element={<Landing />} />
 
-        {/* Main SmartReply App */}
+        {/* Main DoDraft App */}
         <Route path="/app" element={<AppPage />} />
 
         {/* Pricing */}

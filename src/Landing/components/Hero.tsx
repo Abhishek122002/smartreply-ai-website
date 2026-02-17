@@ -102,7 +102,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEditor }) => {
           
           {/* Subheadline */}
           <p className="text-lg sm:text-xl text-slate-500 mb-10 max-w-2xl mx-auto leading-relaxed">
-            No more staring at a blank screen. SmartReply writes clear, natural replies based on what you're responding to.
+            No more staring at a blank screen. DoDraft writes clear, natural replies based on what you're responding to.
           </p>
           
           {/* CTAs */}
@@ -169,7 +169,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenEditor }) => {
                     </div>
                     <div className="flex-1 max-w-xl mx-auto bg-white border border-slate-200 rounded-md h-7 flex items-center px-3 shadow-sm">
                         <div className="w-3 h-3 text-slate-400 mr-2"><Search className="w-3 h-3" /></div>
-                        <div className="text-[10px] text-slate-400 flex-1">app.smartreply.ai/editor</div>
+                        <div className="text-[10px] text-slate-400 flex-1">app.dodraft.ai/editor</div>
                         <div className="w-2 h-2 rounded-full bg-green-500" />
                     </div>
                 </div>

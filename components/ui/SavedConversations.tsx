@@ -61,7 +61,7 @@ export default function SavedConversations({
           className={`
             absolute right-0 top-0 h-full bg-white border-l shadow-lg flex flex-col pointer-events-auto
             transition-transform duration-300
-            ${isMobile ? "w-full" : "w-[380px]"}
+            ${isMobile ? "w-full sm:w-[380px]" : "w-[380px]"}
             ${open ? "translate-x-0" : "translate-x-full"}
           `}
         >

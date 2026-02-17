@@ -136,7 +136,7 @@ if (isFromExtension) {
 
         <p className="text-gray-500 text-sm mb-4">
           {mode === "login"
-            ? "Log in to continue using SmartReply AI"
+            ? "Log in to continue using DoDraft AI"
             : "Sign up to get your free daily replies"}
         </p>
 

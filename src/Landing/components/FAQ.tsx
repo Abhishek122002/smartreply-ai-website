@@ -4,8 +4,8 @@ import { Plus, Minus } from 'lucide-react';
 
 const faqs = [
   {
-    question: "Is SmartReply free to use?",
-    answer: "Yes, SmartReply is currently free to use. You can access the Web Editor immediately without creating an account. The Browser Extension is also free to download."
+    question: "Is DoDraft free to use?",
+    answer: "Yes, DoDraft is currently free to use. You can access the Web Editor immediately without creating an account. The Browser Extension is also free to download."
   },
   {
     question: "Do I need to sign up or log in?",
@@ -13,11 +13,11 @@ const faqs = [
   },
   {
     question: "How does the browser extension work?",
-    answer: "The extension adds a small SmartReply button inside compatible web apps like Gmail, LinkedIn, and WhatsApp Web. When you select a message, you can click the button to generate a reply contextually, without leaving the page."
+    answer: "The extension adds a small DoDraft button inside compatible web apps like Gmail, LinkedIn, and WhatsApp Web. When you select a message, you can click the button to generate a reply contextually, without leaving the page."
   },
   {
     question: "Is my data private?",
-    answer: "Absolutely. SmartReply processes the text you input to generate a response and then discards it. We do not store your messages, emails, or personal data on our servers."
+    answer: "Absolutely. DoDraft processes the text you input to generate a response and then discards it. We do not store your messages, emails, or personal data on our servers."
   },
   {
     question: "Can I customize the tone of the replies?",
@@ -77,7 +77,7 @@ export const FAQ = () => {
                   Frequently Asked Questions
                 </h2>
                 <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                  Everything you need to know about SmartReply. Can't find the answer you're looking for? 
+                  Everything you need to know about DoDraft. Can't find the answer you're looking for? 
                 </p>
                 <div className="hidden md:block p-6 bg-indigo-50/50 rounded-2xl border border-indigo-100">
                     <p className="font-semibold text-indigo-900 mb-2">Need support?</p>

@@ -254,7 +254,7 @@ const steps = {
   editor: [
     {
       title: "Paste the message you received",
-      description: "Copy the email or message you need to reply to and paste it into the editor. SmartReply reads the context to understand what you're responding to.",
+      description: "Copy the email or message you need to reply to and paste it into the editor. DoDraft reads the context to understand what you're responding to.",
       icon: Clipboard
     },
     {
@@ -276,7 +276,7 @@ const steps = {
   extension: [
     {
       title: "Install the browser extension",
-      description: "Download SmartReply for Chrome, Edge, or Firefox. It takes 10 seconds and works across all your messaging platforms.",
+      description: "Download DoDraft for Chrome, Edge, or Firefox. It takes 10 seconds and works across all your messaging platforms.",
       icon: Download
     },
     {
@@ -286,7 +286,7 @@ const steps = {
     },
     {
       title: "Select the message",
-      description: "Highlight the message you want to reply to. Click the SmartReply icon that appears in your toolbar or sidebar.",
+      description: "Highlight the message you want to reply to. Click the DoDraft icon that appears in your toolbar or sidebar.",
       icon: MousePointer2
     },
     {
@@ -330,13 +330,13 @@ export const HowItWorks = () => {
     <section className="py-24 bg-white relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
         
-        {/* --- PART 1: Why SmartReply Exists --- */}
+        {/* --- PART 1: Why DoDraft Exists --- */}
         <div className="mb-32">
             <div className="text-center max-w-2xl mx-auto mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 tracking-tight">Why SmartReply Exists</h2>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 tracking-tight">Why DoDraft Exists</h2>
                 <p className="text-lg text-slate-600 leading-relaxed">
                     Most people don't struggle with what to say. They struggle with how to say it.
-                    SmartReply removes the uncertainty.
+                    DoDraft removes the uncertainty.
                 </p>
             </div>
 

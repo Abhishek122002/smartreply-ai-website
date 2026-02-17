@@ -89,7 +89,8 @@ export default function OutputPanel({
       
 
       {!!generatedContent && (
-        <div className="flex gap-2 justify-end mb-3">
+       <div className="flex flex-wrap gap-2 justify-start md:justify-end mb-3">
+
           <button
             onClick={() => onRegenerate && onRegenerate()}
             disabled={isGenerating}
@@ -116,7 +117,8 @@ export default function OutputPanel({
         </div>
       )}
 
-      <div className="flex-1 border rounded-lg p-4 overflow-y-auto">
+      <div className="flex-1 border rounded-lg p-4 overflow-hidden">
+
         {!generatedContent && !isGenerating && (
           <p className="text-gray-400 text-center mt-24">
             Ready to compose

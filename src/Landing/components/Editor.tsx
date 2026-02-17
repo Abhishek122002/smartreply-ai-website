@@ -41,7 +41,7 @@ export const Editor: React.FC<EditorProps> = ({ onClose }) => {
       <div className="max-w-5xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h2 className="text-2xl font-bold text-slate-900">SmartReply Editor</h2>
+            <h2 className="text-2xl font-bold text-slate-900">DoDraft Editor</h2>
             <p className="text-slate-500">Draft your perfect response in seconds.</p>
           </div>
           <Button variant="ghost" onClick={onClose}>

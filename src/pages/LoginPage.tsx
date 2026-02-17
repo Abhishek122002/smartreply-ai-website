@@ -59,11 +59,12 @@ if (fromExtension) {
   return (
     <AuthPageLayout
       title="Welcome back"
-      subtitle="Log in to continue using SmartReply AI"
+      subtitle="Log in to continue using DoDraft AI"
     >
       <div className="space-y-4">
         {error && (
-          <div className="text-sm text-red-600 bg-red-50 border border-red-200 px-3 py-2 rounded">
+         <div className="text-sm text-red-600 bg-red-50 border border-red-200 px-4 py-3 rounded-lg">
+
             {error}
           </div>
         )}
@@ -72,7 +73,8 @@ if (fromExtension) {
           <label className="text-sm">Email</label>
           <input
             type="email"
-            className="w-full border rounded px-3 py-2 mt-1"
+            className="w-full border rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#5B4DFF] focus:border-[#5B4DFF] transition"
+
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
@@ -82,7 +84,8 @@ if (fromExtension) {
           <label className="text-sm">Password</label>
           <input
             type="password"
-            className="w-full border rounded px-3 py-2 mt-1"
+            className="w-full border rounded px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-[#5B4DFF] focus:border-[#5B4DFF] transition"
+
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -90,7 +93,8 @@ if (fromExtension) {
 
         <button
           onClick={handleLogin}
-          className="w-full py-2 rounded bg-blue-600 text-white font-medium"
+         className="w-full py-2 rounded bg-[#5B4DFF] text-white font-medium hover:opacity-90 transition"
+
         >
           Log in
         </button>

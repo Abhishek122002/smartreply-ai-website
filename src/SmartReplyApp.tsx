@@ -267,7 +267,11 @@ export default function SmartReplyApp() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50 overflow-hidden">
+   <div className="min-h-screen md:h-screen lg:h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50 md:overflow-hidden lg:overflow-hidden">
+
+
+
+
       <Header
         onNewChat={handleNewChat}
         onOpenHistorySession={(session) => setViewSession(session)}
@@ -312,42 +316,58 @@ export default function SmartReplyApp() {
         </div>
       )}
 
-      <div className="flex-1 flex gap-6 p-6 overflow-hidden">
-        <div className="w-1/2">
-          <InputPanel
-            settings={settings}
-            onChangeSettings={setSettings}
-            replyFor={replyFor}
-            onChangeReplyFor={setReplyFor}
-            points={points}
-            currentPoint={currentPoint}
-            onChangeCurrentPoint={setCurrentPoint}
-            onAddPoint={() => {
-              if (!currentPoint.trim()) return;
-              setPoints((p) => [...p, currentPoint.trim()]);
-              setCurrentPoint("");
-            }}
-            onGenerate={handleGenerate}
-            isGenerating={isGenerating}
-            conversationCount={conversationCount}
-            onOpenSaved={() => setShowSaved(true)}
-            externalConfigOpen={true}
-            onConfigToggle={() => {}}
-          />
-        </div>
+<div className="flex-1 flex flex-col md:flex-row gap-4 md:gap-6 lg:gap-6 p-3 sm:p-4 md:p-6 lg:p-6 min-h-0">
 
-        <div className="w-1/2">
-          <OutputPanel
-            generatedContent={generatedContent}
-            isGenerating={isGenerating}
-            onRegenerate={handleRewrite}
-            onShorten={handleShorten}
-            onExpand={handleExpand}
-            onSave={handleSaveThread}
-            onOpenSaved={() => setShowSaved(true)}
-          />
-        </div>
-      </div>
+
+
+  {/* LEFT PANEL */}
+  <div className="w-full sm:w-3/5 md:w-1/2 lg:w-1/2 flex flex-col min-h-0">
+
+
+    <div className="flex-1 overflow-y-auto pr-2">
+      <InputPanel
+        settings={settings}
+        onChangeSettings={setSettings}
+        replyFor={replyFor}
+        onChangeReplyFor={setReplyFor}
+        points={points}
+        currentPoint={currentPoint}
+        onChangeCurrentPoint={setCurrentPoint}
+        onAddPoint={() => {
+          if (!currentPoint.trim()) return;
+          setPoints((p) => [...p, currentPoint.trim()]);
+          setCurrentPoint("");
+        }}
+        onGenerate={handleGenerate}
+        isGenerating={isGenerating}
+        conversationCount={conversationCount}
+        onOpenSaved={() => setShowSaved(true)}
+        externalConfigOpen={false}
+        onConfigToggle={() => {}}
+      />
+    </div>
+  </div>
+
+  {/* RIGHT PANEL */}
+  <div className="w-full sm:w-2/5 md:w-1/2 lg:w-1/2 flex flex-col min-h-0">
+
+
+    <div className="flex-1 overflow-y-auto">
+      <OutputPanel
+        generatedContent={generatedContent}
+        isGenerating={isGenerating}
+        onRegenerate={handleRewrite}
+        onShorten={handleShorten}
+        onExpand={handleExpand}
+        onSave={handleSaveThread}
+        onOpenSaved={() => setShowSaved(true)}
+      />
+    </div>
+  </div>
+
+</div>
+
+
 
       <SavedConversations
         open={showSaved}

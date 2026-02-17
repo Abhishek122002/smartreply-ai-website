@@ -73,7 +73,8 @@ if (fromExtension) {
         )}
 
         <input
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#5B4DFF] focus:border-[#5B4DFF] transition"
+
           placeholder="Full name"
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -81,7 +82,7 @@ if (fromExtension) {
 
         <input
           type="email"
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#5B4DFF] focus:border-[#5B4DFF] transition"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -89,7 +90,7 @@ if (fromExtension) {
 
         <input
           type="password"
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#5B4DFF] focus:border-[#5B4DFF] transition"
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -97,7 +98,7 @@ if (fromExtension) {
 
         <input
           type="password"
-          className="w-full border rounded px-3 py-2"
+          className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#5B4DFF] focus:border-[#5B4DFF] transition"
           placeholder="Confirm password"
           value={confirm}
           onChange={(e) => setConfirm(e.target.value)}
@@ -105,7 +106,7 @@ if (fromExtension) {
 
         <button
           onClick={handleSignup}
-          className="w-full py-2 rounded bg-blue-600 text-white font-medium"
+          className="w-full py-2 rounded bg-[#5B4DFF] text-white font-medium hover:opacity-90 transition"
         >
           Create account
         </button>

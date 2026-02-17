@@ -63,7 +63,7 @@ export const Comparison = () => {
             <div className="bg-white rounded-2xl p-8 border border-indigo-100 shadow-xl shadow-indigo-900/5 relative ring-1 ring-indigo-50">
               <div className="absolute top-0 left-0 w-1 h-full bg-indigo-500 rounded-l-2xl" />
               <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-indigo-600 px-4 py-1 rounded-full text-xs font-bold text-white uppercase tracking-wider shadow-lg shadow-indigo-500/30">
-                SmartReply
+                DoDraft
               </div>
 
               <div className="flex items-start gap-4 mb-6">

@@ -11,7 +11,7 @@ export const generateReply = async (params: GenerateReplyParams): Promise<string
 
   const { context, points, tone, length } = params;
 
-  let prompt = `You are SmartReply, an expert communication assistant. 
+  let prompt = `You are DoDraft, an expert communication assistant. 
   Your goal is to write a reply that feels natural, clear, and confident.
   
   Configuration:

@@ -89,11 +89,11 @@ const Available = Math.max(FREE_LIMIT - conversationCount, 0);
 
   return (
     <>
-      <div
-        className={`relative h-full w-full bg-white border rounded-xl md:rounded-2xl shadow-sm flex flex-col p-4 md:p-6 ${
-          configOpen && !isMobile ? "overflow-y-auto" : "overflow-hidden"
-        }`}
-      >
+  <div className="relative w-full bg-white border rounded-xl md:rounded-2xl shadow-sm flex flex-col h-full p-4 md:p-6 overflow-y-auto">
+
+  <div className="flex flex-col h-auto p-4 md:p-6 ">
+
+
         {/* HEADER */}
         <div className="flex items-center justify-between mb-2">
           <label className="font-medium">Reply for</label>
@@ -117,7 +117,8 @@ const Available = Math.max(FREE_LIMIT - conversationCount, 0);
             rows={5}
             value={replyFor}
             onChange={(e) => onChangeReplyFor(e.target.value)}
-            className="w-full min-h-[140px] border rounded-lg p-3 resize-y pr-3 pb-20"
+           className="w-full min-h-[120px] sm:min-h-[140px] border rounded-lg p-3 resize-y pr-3 pb-20 text-sm sm:text-base"
+
             placeholder="Type the message you are replying to…"
           />
 
@@ -197,7 +198,9 @@ const Available = Math.max(FREE_LIMIT - conversationCount, 0);
 </div>
 
         {/* CONFIGURATION */}
-        <div className="mt-4">
+       <div className="mt-4">
+
+
           <ControlsPanel
             settings={settings}
             onChange={onChangeSettings}
@@ -205,6 +208,7 @@ const Available = Math.max(FREE_LIMIT - conversationCount, 0);
             onToggle={onConfigToggle}
           />
         </div>
+      </div>
       </div>
 
       {/* IMAGE PREVIEW POPUP */}

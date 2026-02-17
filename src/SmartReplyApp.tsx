@@ -321,7 +321,8 @@ export default function SmartReplyApp() {
 
 
   {/* LEFT PANEL */}
-  <div className="w-full sm:w-3/5 md:w-1/2 lg:w-1/2 flex flex-col min-h-0">
+  <div className="w-full md:w-1/2 flex flex-col min-h-0">
+
 
 
     <div className="flex-1 overflow-y-auto pr-2">
@@ -349,7 +350,8 @@ export default function SmartReplyApp() {
   </div>
 
   {/* RIGHT PANEL */}
-  <div className="w-full sm:w-2/5 md:w-1/2 lg:w-1/2 flex flex-col min-h-0">
+  <div className="w-full md:w-1/2 flex flex-col min-h-0">
+
 
 
     <div className="flex-1 overflow-y-auto">

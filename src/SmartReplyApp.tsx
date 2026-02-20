@@ -30,6 +30,9 @@ export default function SmartReplyApp() {
   const [currentPoint, setCurrentPoint] = useState("");
   const [settings, setSettings] = useState<AppSettings>(initialSettings);
 
+  const [chatId, setChatId] = useState<string | null>(null);
+  const [threadMessages, setThreadMessages] = useState<any[]>([]);
+
   const [generatedContent, setGeneratedContent] =
     useState<GeneratedContent | null>(null);
 
@@ -46,44 +49,65 @@ export default function SmartReplyApp() {
   const limitReached = conversationCount >= FREE_LIMIT;
 
   /* ============================
-     GENERATE (REAL BACKEND)
+     GENERATE CHAT
   ============================ */
   const handleGenerate = async () => {
     if (isGenerating) return;
 
     const token = localStorage.getItem("sr_token");
+    const user = localStorage.getItem("sr_user");
 
-    if (!token) {
+    if (!token || !user) {
       alert("Please log in first.");
       return;
     }
 
-    if (!replyFor.trim()) {
-      alert("Please enter a message first.");
+    if (!replyFor.trim()) return;
+
+    if (limitReached) {
+      alert("Free limit reached.");
       return;
     }
 
-    if (limitReached) {
-      alert("You reached your free daily limit");
-      return;
-    }
+    const parsedUser = JSON.parse(user);
 
     setIsGenerating(true);
 
     try {
-      const data = await api.createChat(token, {
+      const response = await api.createChat(token, {
+        userId: parsedUser.id,
         message: replyFor,
+        tone: settings.tone[0],
+        length: settings.length,
+        language: settings.language,
+        emailMode: settings.emailMode,
+        pointsToInclude: points.join(", "),
+        chatId: chatId || undefined,
       });
 
-      console.log("CHAT RESPONSE:", data);
+      console.log("CHAT RESPONSE:", response);
 
-      if (!data?.reply) {
-        console.error("No reply returned");
+      if (!response?.reply) {
+        console.error("No reply returned:", response);
         return;
       }
 
-      setGeneratedContent({ text: data.reply });
+      setGeneratedContent({ text: response.reply });
+
+      if (response.chatId && !chatId) {
+        setChatId(response.chatId);
+      }
+
+      setThreadMessages((prev) => [
+        ...prev,
+        {
+          user: replyFor,
+          ai: response.reply,
+        },
+      ]);
+
       setConversationCount((prev) => prev + 1);
+
     } catch (err) {
       console.error("Generate failed:", err);
     } finally {
@@ -93,25 +117,35 @@ export default function SmartReplyApp() {
 
   /* ============================
      REWRITE / SHORTEN / EXPAND
-     (Re-calls backend with current text)
   ============================ */
-
   const regenerateWithMode = async (mode: string) => {
     if (!generatedContent?.text) return;
 
     const token = localStorage.getItem("sr_token");
-    if (!token) return;
+    const user = localStorage.getItem("sr_user");
+
+    if (!token || !user) return;
+
+    const parsedUser = JSON.parse(user);
 
     setIsGenerating(true);
 
     try {
-      const data = await api.createChat(token, {
+      const response = await api.createChat(token, {
+        userId: parsedUser.id,
         message: `${mode.toUpperCase()} this:\n\n${generatedContent.text}`,
+        tone: settings.tone[0],
+        length: settings.length,
+        language: settings.language,
+        emailMode: settings.emailMode,
+        pointsToInclude: "",
+        chatId: chatId || undefined,
       });
 
-      if (data?.reply) {
-        setGeneratedContent({ text: data.reply });
+      if (response?.reply) {
+        setGeneratedContent({ text: response.reply });
       }
+
     } catch (err) {
       console.error(`${mode} failed:`, err);
     } finally {
@@ -124,9 +158,18 @@ export default function SmartReplyApp() {
   const handleExpand = () => regenerateWithMode("expand");
 
   /* ============================
+     NEW CHAT
+  ============================ */
+  const handleNewChat = () => {
+    setReplyFor("");
+    setGeneratedContent(null);
+    setThreadMessages([]);
+    setChatId(null);
+  };
+
+  /* ============================
      SAVE THREAD
   ============================ */
-
   const handleSaveThread = () => {
     if (!generatedContent?.text) return;
 
@@ -145,18 +188,9 @@ export default function SmartReplyApp() {
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-50">
-
-      <Header
-        onNewChat={() => {
-          setReplyFor("");
-          setGeneratedContent(null);
-        }}
-        onOpenHistorySession={() => {}}
-      />
+      <Header onNewChat={handleNewChat} onOpenHistorySession={() => {}} />
 
       <div className="flex-1 flex flex-col md:flex-row gap-6 p-6">
-
-        {/* LEFT PANEL */}
         <div className="w-full md:w-1/2">
           <InputPanel
             settings={settings}
@@ -180,7 +214,6 @@ export default function SmartReplyApp() {
           />
         </div>
 
-        {/* RIGHT PANEL */}
         <div className="w-full md:w-1/2">
           <OutputPanel
             generatedContent={generatedContent}

@@ -1,4 +1,5 @@
-const BASE_URL = "/v1";
+const BASE_URL =
+  import.meta.env.VITE_API_URL || "/v1";
 
 export const api = {
   signup: async (data: { name: string; email: string; password: string }) => {

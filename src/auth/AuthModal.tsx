@@ -1,11 +1,10 @@
 import { useState } from "react";
+import { api } from "../Landing/services/api";
 
 function isFromExtension() {
   const params = new URLSearchParams(window.location.search);
   return params.get("from") === "extension";
 }
-
-
 export default function AuthModal({ onClose }: { onClose: () => void }) {
   const [mode, setMode] = useState<"login" | "signup">("login");
 
@@ -16,8 +15,6 @@ export default function AuthModal({ onClose }: { onClose: () => void }) {
 
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
-
-  const API = "http://localhost:3001";
 
   function resetMessages() {
     setError(null);
@@ -39,16 +36,10 @@ export default function AuthModal({ onClose }: { onClose: () => void }) {
     }
 
     try {
-      const res = await fetch(`${API}/api/auth/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-      });
+      const data = await api.signup({ name, email, password });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || "Signup failed");
+      if (data?.error) {
+        setError(data.error);
         return;
       }
 
@@ -69,45 +60,38 @@ export default function AuthModal({ onClose }: { onClose: () => void }) {
     }
 
     try {
-      const res = await fetch(`${API}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      const data = await api.login({ email, password });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.error || "Login failed");
+      if (!data?.token) {
+        setError(data?.error || "Login failed");
         return;
       }
 
       // store user + token
-  // ---------------- EXTENSION HANDOFF ----------------
-const params = new URLSearchParams(window.location.search);
-const isFromExtension = params.get("from") === "extension";
+      localStorage.setItem("sr_user", JSON.stringify(data.user));
+      localStorage.setItem("sr_token", data.token);
 
-if (isFromExtension) {
-  const EXTENSION_ID = "ifdgfbffilgkboghknmdongkhjolfdah";
+      /* ---------------- EXTENSION HANDOFF ---------------- */
+      const params = new URLSearchParams(window.location.search);
+      const isFromExtension = params.get("from") === "extension";
 
-  window.location.href =
-    `chrome-extension://${"ifdgfbffilgkboghknmdongkhjolfdah"}/auth.html#token=${data.token}`;
+      if (isFromExtension) {
+        const EXTENSION_ID = "ifdgfbffilgkboghknmdongkhjolfdah";
 
-  return; // VERY IMPORTANT: stop normal website flow
-}
+        window.location.href =
+          `chrome-extension://${EXTENSION_ID}/auth.html#token=${data.token}`;
 
+        return;
+      }
 
-
-      /* ---------------- DAILY LIMIT (persist across logins) ---------------- */
+      /* ---------------- DAILY LIMIT RESET ---------------- */
       const today = new Date().toDateString();
       const storedDate = localStorage.getItem("sr_daily_date");
 
-      // if first login today OR first time ever → reset
       if (!storedDate || storedDate !== today) {
         localStorage.setItem("sr_daily_date", today);
         localStorage.setItem("sr_daily_count", "0");
       }
-      // else — keep the existing count as-is
 
       setSuccess("Logged in successfully");
 
@@ -121,7 +105,6 @@ if (isFromExtension) {
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
       <div className="bg-white rounded-2xl w-[440px] p-6 shadow-xl relative">
 
-        {/* CLOSE */}
         <button
           onClick={onClose}
           className="absolute right-4 top-4 text-gray-500"
@@ -129,7 +112,6 @@ if (isFromExtension) {
           ✕
         </button>
 
-        {/* TITLE */}
         <h2 className="text-2xl font-semibold mb-2">
           {mode === "login" ? "Welcome back" : "Create your account"}
         </h2>
@@ -140,7 +122,6 @@ if (isFromExtension) {
             : "Sign up to get your free daily replies"}
         </p>
 
-        {/* SWITCH */}
         <div className="flex gap-3 mb-4">
           <button
             onClick={() => { setMode("login"); resetMessages(); }}
@@ -161,21 +142,18 @@ if (isFromExtension) {
           </button>
         </div>
 
-        {/* ERROR */}
         {error && (
           <div className="mb-3 text-sm text-red-600 bg-red-50 border border-red-200 px-3 py-2 rounded">
             {error}
           </div>
         )}
 
-        {/* SUCCESS */}
         {success && (
           <div className="mb-3 text-sm text-green-600 bg-green-50 border border-green-200 px-3 py-2 rounded">
             {success}
           </div>
         )}
 
-        {/* SIGNUP NAME */}
         {mode === "signup" && (
           <>
             <label className="text-sm">Full Name</label>
@@ -188,7 +166,6 @@ if (isFromExtension) {
           </>
         )}
 
-        {/* EMAIL */}
         <label className="text-sm">Email</label>
         <input
           type="email"
@@ -197,7 +174,6 @@ if (isFromExtension) {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        {/* PASSWORD */}
         <label className="text-sm">Password</label>
         <input
           type="password"
@@ -206,7 +182,6 @@ if (isFromExtension) {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        {/* CONFIRM */}
         {mode === "signup" && (
           <>
             <label className="text-sm">Confirm Password</label>
@@ -219,7 +194,6 @@ if (isFromExtension) {
           </>
         )}
 
-        {/* BUTTON */}
         <button
           onClick={mode === "login" ? handleLogin : handleSignup}
           className="w-full py-2 rounded bg-blue-600 text-white font-medium"

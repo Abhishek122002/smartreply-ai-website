@@ -1,49 +1,44 @@
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { api } from "../Landing/services/api";
 
 export default function Pricing() {
   const navigate = useNavigate();
   const [billing, setBilling] = useState<"monthly" | "yearly">("monthly");
-  const [showLimitToast, setShowLimitToast] = useState(false);
-   const [usage, setUsage] = useState<number | null>(null);
-const [limitReached, setLimitReached] = useState(false);
+  const [userData, setUserData] = useState<any>(null);
 
   useEffect(() => {
-  const token = localStorage.getItem("sr_token");
+    const token = localStorage.getItem("sr_token");
+    const user = localStorage.getItem("sr_user");
 
-  // not logged in — no usage to show
-  if (!token) return;
+    if (!token || !user) return;
 
-  fetch("http://localhost:3001/api/usage", {
-    headers: { Authorization: `Bearer ${token}` }
-  })
-    .then(res => res.json())
-    .then(data => {
-      if (data?.count !== undefined) {
-        setUsage(data.count);
-        setLimitReached(data.count >= 10);
-      }
-    })
-    .catch(() => {});
-}, []);
+    const parsedUser = JSON.parse(user);
+
+    api
+      .getUserById(token, parsedUser.id)
+      .then((data) => {
+        setUserData(data);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch user:", err);
+      });
+  }, []);
 
   return (
     <div className="min-h-screen bg-white text-gray-900 flex flex-col items-center justify-center px-6 py-20">
-      {/* LIMIT MESSAGE */}
-     {usage !== null && (
-  <div className={`mb-8 max-w-3xl w-full px-5 py-4 rounded-lg border text-sm text-center
-    ${limitReached
-      ? "bg-yellow-100 border-yellow-300 text-yellow-900"
-      : "bg-blue-50 border-blue-300 text-blue-800"
-    }`}
-  >
-    {limitReached
-      ? "You’ve reached your free generation limit. Upgrade to continue."
-      : `You still have ${10 - usage} free replies left today — upgrade for unlimited access.`}
-  </div>
-)}
-
+      
+      {userData && (
+        <div className="mb-6 text-center">
+          <p className="text-sm text-gray-600">
+            Logged in as <strong>{userData.name}</strong>
+          </p>
+          <p className="text-sm text-gray-500">
+            Plan Status: {userData.status}
+          </p>
+        </div>
+      )}
 
       <motion.h1
         initial={{ opacity: 0, y: 20 }}
@@ -57,7 +52,6 @@ const [limitReached, setLimitReached] = useState(false);
         Upgrade anytime. Cancel anytime.
       </p>
 
-      {/* BILLING TOGGLE */}
       <div className="flex items-center gap-2 mb-14 bg-gray-100 rounded-full p-1">
         <button
           onClick={() => setBilling("monthly")}
@@ -79,7 +73,6 @@ const [limitReached, setLimitReached] = useState(false);
       </div>
 
       <div className="grid gap-8 md:grid-cols-3 max-w-6xl w-full">
-        {/* BASIC */}
         <PlanCard
           title="Basic"
           price="$0"
@@ -95,7 +88,6 @@ const [limitReached, setLimitReached] = useState(false);
           outlined
         />
 
-        {/* PRO */}
         <PlanCard
           title="Pro"
           price={billing === "monthly" ? "$20 / month" : "$192 / year"}
@@ -112,7 +104,6 @@ const [limitReached, setLimitReached] = useState(false);
           onClick={() => alert("Connect payment gateway")}
         />
 
-        {/* PRO MAX */}
         <PlanCard
           title="Pro Max"
           price={billing === "monthly" ? "$50 / month" : "$480 / year"}
@@ -128,17 +119,11 @@ const [limitReached, setLimitReached] = useState(false);
           onClick={() => alert("Connect payment gateway")}
         />
       </div>
-
-      <div className="mt-14 text-center text-gray-500 text-sm space-y-1">
-        <p>✓ Secure payments</p>
-        <p>✓ No hidden charges</p>
-        <p>✓ Cancel anytime</p>
-      </div>
     </div>
   );
 }
 
-/* ---- PLAN CARD ---- */
+/* PLAN CARD */
 
 function PlanCard({
   title,
@@ -162,14 +147,13 @@ function PlanCard({
   return (
     <motion.div
       whileHover={{ y: -6 }}
-      className={`rounded-xl p-8 flex flex-col justify-between min-h-[440px] transition
-        ${
-          highlight
-            ? "border-2 border-blue-500 bg-blue-50"
-            : outlined
-            ? "border border-gray-300 bg-white"
-            : "border border-gray-200 bg-white"
-        }`}
+      className={`rounded-xl p-8 flex flex-col justify-between min-h-[440px] transition ${
+        highlight
+          ? "border-2 border-blue-500 bg-blue-50"
+          : outlined
+          ? "border border-gray-300 bg-white"
+          : "border border-gray-200 bg-white"
+      }`}
     >
       <div>
         <div className="flex items-center justify-between mb-4">
@@ -194,12 +178,11 @@ function PlanCard({
 
       <button
         onClick={onClick}
-        className={`mt-8 w-full py-3 rounded-lg font-medium transition
-          ${
-            highlight
-              ? "bg-blue-600 hover:bg-blue-700 text-white"
-              : "bg-gray-900 hover:bg-gray-800 text-white"
-          }`}
+        className={`mt-8 w-full py-3 rounded-lg font-medium transition ${
+          highlight
+            ? "bg-blue-600 hover:bg-blue-700 text-white"
+            : "bg-gray-900 hover:bg-gray-800 text-white"
+        }`}
       >
         {buttonText}
       </button>

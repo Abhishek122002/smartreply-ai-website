@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthPageLayout from "../auth/AuthPageLayout";
+import { api } from "../Landing/services/api";
+
 
 export default function Signup() {
   const navigate = useNavigate();
@@ -11,7 +13,7 @@ export default function Signup() {
   const [confirm, setConfirm] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const API = "http://localhost:3001";
+
 
   const handleSignup = async () => {
     setError(null);
@@ -26,38 +28,31 @@ export default function Signup() {
       return;
     }
 
-    try {
-      const res = await fetch(`${API}/api/auth/signup`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, password }),
-      });
+   try {
+  const data = await api.signup({ name, email, password });
 
-      const data = await res.json();
+  if (data.error) {
+    setError(data.error);
+    return;
+  }
 
-      if (!res.ok) {
-        setError(data.error || "Signup failed");
-        return;
-      }
+  const params = new URLSearchParams(window.location.search);
+  const fromExtension = params.get("from") === "extension";
 
-      const params = new URLSearchParams(window.location.search);
-const fromExtension = params.get("from") === "extension";
+  if (fromExtension) {
+    const EXTENSION_ID = "ifdgfbffilgkboghknmdongkhjolfdah";
 
-if (fromExtension) {
-  const EXTENSION_ID = "ifdgfbffilgkboghknmdongkhjolfdah";
+    window.location.href =
+      `chrome-extension://${EXTENSION_ID}/auth.html#token=${data.token}`;
 
-  window.location.href =
-    `chrome-extension://${EXTENSION_ID}/auth.html#token=${data.token}`;
+    return;
+  }
 
-  return;
+  navigate("/login");
+
+} catch {
+  setError("Server error — try again later");
 }
-``
-
-
-      navigate("/login"); // ✅ go to login after signup
-    } catch {
-      setError("Server error — try again later");
-    }
   };
 
   return (

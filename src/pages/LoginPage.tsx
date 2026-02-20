@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthPageLayout from "../auth/AuthPageLayout";
+import { api } from "../Landing/services/api";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -9,52 +10,48 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const API = "http://localhost:3001";
+  
 
   const handleLogin = async () => {
-    setError(null);
+  setError(null);
 
-    if (!email || !password) {
-      setError("Enter email and password");
+  if (!email || !password) {
+    setError("Enter email and password");
+    return;
+  }
+
+  try {
+    const data = await api.login({ email, password });
+    console.log("LOGIN RESPONSE:", data);
+
+
+    if (!data.token) {
+      setError(data.error || "Login failed");
       return;
     }
 
-    try {
-      const res = await fetch(`${API}/api/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+    localStorage.setItem("sr_user", JSON.stringify(data.user));
+    localStorage.setItem("sr_token", data.token);
 
-      const data = await res.json();
+    // 🔁 CHECK IF LOGIN CAME FROM EXTENSION
+    const params = new URLSearchParams(window.location.search);
+    const fromExtension = params.get("from") === "extension";
 
-      if (!res.ok) {
-        setError(data.error || "Login failed");
-        return;
-      }
+    if (fromExtension) {
+      const EXTENSION_ID = "ifdgfbffilgkboghknmdongkhjolfdah";
 
-      localStorage.setItem("sr_user", JSON.stringify(data.user));
-      localStorage.setItem("sr_token", data.token);
-      
-      // 🔁 CHECK IF LOGIN CAME FROM EXTENSION
-const params = new URLSearchParams(window.location.search);
-const fromExtension = params.get("from") === "extension";
+      window.location.href =
+        `chrome-extension://${EXTENSION_ID}/auth.html#token=${data.token}`;
 
-if (fromExtension) {
-  const EXTENSION_ID = "ifdgfbffilgkboghknmdongkhjolfdah";
-
-  window.location.href =
-    `chrome-extension://${EXTENSION_ID}/auth.html#token=${data.token}`;
-
-  return; // ⛔ VERY IMPORTANT: stop normal website flow
-}
-
-
-      navigate("/app"); // ✅ go to main app after login
-    } catch {
-      setError("Server error — try again later");
+      return;
     }
-  };
+
+    navigate("/app");
+
+  } catch {
+    setError("Server error — try again later");
+  }
+};
 
   return (
     <AuthPageLayout

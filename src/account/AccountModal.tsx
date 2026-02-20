@@ -1,27 +1,33 @@
 import { useEffect, useState } from "react";
+import { api } from "../Landing/services/api";
 
 export default function AccountModal({ onClose }: { onClose: () => void }) {
-  const [usage, setUsage] = useState<{ count: number } | null>(null);
-
-  const user = localStorage.getItem("sr_user")
-    ? JSON.parse(localStorage.getItem("sr_user")!)
-    : null;
+  const [userData, setUserData] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("sr_token");
-    if (!token) return;
+    const user = localStorage.getItem("sr_user");
 
-    fetch("http://localhost:3001/api/usage", {
-      headers: { Authorization: `Bearer ${token}` }
-    })
-      .then(res => res.json())
-      .then(data => setUsage(data))
-      .catch(() => {});
+    if (!token || !user) {
+      setLoading(false);
+      return;
+    }
+
+    const parsedUser = JSON.parse(user);
+
+    api
+      .getUserDetails(token, parsedUser.id)
+      .then((data) => {
+        setUserData(data);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
   }, []);
 
   return (
     <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-      <div className="bg-white rounded-2xl w-[460px] p-6 shadow-xl relative">
+      <div className="bg-white rounded-2xl w-[500px] p-6 shadow-xl relative">
 
         <button
           onClick={onClose}
@@ -30,31 +36,37 @@ export default function AccountModal({ onClose }: { onClose: () => void }) {
           ✕
         </button>
 
-        <h2 className="text-xl font-semibold mb-2">Account</h2>
+        <h2 className="text-2xl font-semibold mb-6">Account Details</h2>
 
-        <div className="space-y-3 mt-4">
-          <div>
-            <p className="text-sm text-gray-500">Name</p>
-            <p className="font-medium">{user?.name}</p>
+        {loading && <p>Loading...</p>}
+
+        {!loading && userData && (
+          <div className="space-y-3 text-sm">
+            <div>
+              <strong>Name:</strong> {userData.name}
+            </div>
+
+            <div>
+              <strong>Email:</strong> {userData.email}
+            </div>
+
+            <div>
+              <strong>Phone:</strong> {userData.phone || "Not provided"}
+            </div>
+
+            <div>
+              <strong>Status:</strong> {userData.status}
+            </div>
+
+            <div>
+              <strong>Created At:</strong> {userData.createdAt}
+            </div>
           </div>
+        )}
 
-          <div>
-            <p className="text-sm text-gray-500">Email</p>
-            <p className="font-medium">{user?.email}</p>
-          </div>
-
-          <div>
-            <p className="text-sm text-gray-500">Plan</p>
-            <p className="font-medium">Free Plan</p>
-          </div>
-
-          {/* <div>
-            <p className="text-sm text-gray-500">Daily Generations</p>
-            <p className="font-medium">
-              {usage ? `${usage.count}/10` : "Loading..."}
-            </p>
-          </div> */}
-        </div>
+        {!loading && !userData && (
+          <p className="text-red-500">Failed to load user data.</p>
+        )}
       </div>
     </div>
   );

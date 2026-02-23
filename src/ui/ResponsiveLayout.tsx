@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from "react";
 import InputPanel from "./InputPanel";
 import OutputPanel from "./OutputPanel";
-import { AppSettings, GeneratedContent } from "../../src/types";
+import { AppSettings, GeneratedContent } from "../types";
 
 interface Props {
   settings: AppSettings;

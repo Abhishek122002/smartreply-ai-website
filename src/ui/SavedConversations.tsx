@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { SavedConversation } from "../../src/types";
+import { SavedConversation } from "../types";
 import copy from "../../src/assets/copy.png";
+import { api } from "../Landing/services/api";
 
 interface Props {
   items: SavedConversation[];
@@ -41,12 +42,22 @@ export default function SavedConversations({
     setActive(updated);
   };
 
-  const handleRemove = (id: string) => {
-    if (!confirm("Delete this saved reply?")) return;
+  const handleRemove = async (id: string) => {
+  if (!confirm("Delete this chat?")) return;
+
+  const token = localStorage.getItem("sr_token");
+  if (!token) return;
+
+  try {
+    await api.deleteChat(token, id);
 
     if (active?.id === id) setActive(null);
-    onRemove(id);
-  };
+
+    onRemove(id); // remove from parent state
+  } catch (err) {
+    console.error("Delete failed:", err);
+  }
+};
 
   return (
     <>
@@ -97,7 +108,17 @@ export default function SavedConversations({
                 </button>
 
                 <div
-                  onClick={() => setActive(c)}
+                  onClick={async () => {
+  const token = localStorage.getItem("sr_token");
+  if (!token) return;
+
+  try {
+    const fullChat = await api.getChatById(token, c.id);
+    setActive(fullChat);
+  } catch (err) {
+    console.error("Failed to load chat:", err);
+  }
+}}
                   className="p-4 cursor-pointer"
                 >
                   <p className="text-sm font-medium text-gray-800 line-clamp-2 pr-6">

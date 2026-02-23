@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Length, AppSettings } from "../../src/types";
+import { Length, AppSettings } from "../types";
 
 interface Props {
   settings: AppSettings;

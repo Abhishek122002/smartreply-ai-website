@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { GeneratedContent } from "../../src/types";
+import { GeneratedContent } from "../types";
 import basket from "../../src/assets/basket.png";
 
 interface Props {

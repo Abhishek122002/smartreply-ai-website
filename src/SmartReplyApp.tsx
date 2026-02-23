@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-import Header from "../components/ui/Header";
-import InputPanel from "../components/ui/InputPanel";
-import OutputPanel from "../components/ui/OutputPanel";
-import SavedConversations from "../components/ui/SavedConversations";
+import Header from "./ui/Header";
+import InputPanel from "./ui/InputPanel";
+import OutputPanel from "./ui/OutputPanel";
+import SavedConversations from "./ui/SavedConversations";
 
 import {
   AppSettings,
@@ -32,6 +32,7 @@ export default function SmartReplyApp() {
 
   const [chatId, setChatId] = useState<string | null>(null);
   const [threadMessages, setThreadMessages] = useState<any[]>([]);
+  const [backendChats, setBackendChats] = useState<any[]>([]);
 
   const [generatedContent, setGeneratedContent] =
     useState<GeneratedContent | null>(null);
@@ -47,6 +48,27 @@ export default function SmartReplyApp() {
   const [showSaved, setShowSaved] = useState(false);
 
   const limitReached = conversationCount >= FREE_LIMIT;
+
+  useEffect(() => {
+  const token = localStorage.getItem("sr_token");
+  const user = localStorage.getItem("sr_user");
+
+  if (!token || !user) return;
+
+  const parsedUser = JSON.parse(user);
+
+  api.getUserChats(token, parsedUser.id)
+    .then((data) => {
+      console.log("BACKEND CHATS:", data);
+      if (Array.isArray(data)) {
+        setBackendChats(data);
+      }
+    })
+    .catch((err) => {
+      console.error("Failed to load chats:", err);
+    });
+
+}, []);
 
   /* ============================
      GENERATE CHAT
@@ -229,12 +251,12 @@ export default function SmartReplyApp() {
 
       <SavedConversations
         open={showSaved}
-        items={saved}
+        items={backendChats}
         isMobile={false}
         onClose={() => setShowSaved(false)}
         onRemove={(id) => {
-          const updated = saved.filter((c) => c.id !== id);
-          setSaved(updated);
+          const updated = backendChats.filter((c) => c.id !== id);
+          setBackendChats(updated);
           localStorage.setItem("sr_saved", JSON.stringify(updated));
         }}
       />

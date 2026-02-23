@@ -4,6 +4,7 @@ import AppPage from "../pages/AppPage";
 import Pricing from "../pages/Pricing";
 import LoginPage from "../pages/LoginPage";
 import SignupPage from "../pages/SignupPage";
+import AccountPage from "../account/AccountPage";
 
 
 export default function AppRouter() {
@@ -23,6 +24,8 @@ export default function AppRouter() {
 
         
         <Route path="/signup" element={<SignupPage />} />
+
+        <Route path="/account" element={<AccountPage />} />
 
 
         {/* Fallback (ALWAYS LAST) */}

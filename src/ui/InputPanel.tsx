@@ -1,6 +1,6 @@
 import { useState, useEffect, KeyboardEvent } from "react";
 import ControlsPanel from "./ControlsPanel";
-import { AppSettings } from "../../src/types";
+import { AppSettings } from "../types";
 
 interface Props {
   settings: AppSettings;

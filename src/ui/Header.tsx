@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import AccountModal from "../../src/account/AccountModal";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -11,7 +10,7 @@ export default function Header({ onNewChat, onOpenHistorySession }: Props) {
   const navigate = useNavigate();
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [showAccount, setShowAccount] = useState(false);
+  
   const [showSettings, setShowSettings] = useState(false);
 
   const [user, setUser] = useState<any>(null);
@@ -120,6 +119,21 @@ export default function Header({ onNewChat, onOpenHistorySession }: Props) {
 
   const groups = groupHistory();
 
+  /* GET INITIALS */
+const getInitials = (name: string) => {
+  if (!name) return "";
+
+  const parts = name.trim().split(" ");
+
+  if (parts.length === 1) {
+    return parts[0].charAt(0).toUpperCase();
+  }
+
+  return (
+    parts[0].charAt(0) + parts[parts.length - 1].charAt(0)
+  ).toUpperCase();
+};
+
   return (
     <>
       {/* HEADER */}
@@ -135,16 +149,26 @@ export default function Header({ onNewChat, onOpenHistorySession }: Props) {
         <h1 className="font-semibold text-sm md:text-base lg:text-lg truncate">
           DoDraft AI</h1>
 
-        {!user ? (
-          <button
-            onClick={() => navigate("/login")}
-            className="px-3 py-1.5 rounded border"
-          >
-            Log in
-          </button>
-        ) : (
-          <span className="text-sm text-gray-600">Hi, {user.name}</span>
-        )}
+       {!user ? (
+  <button
+    onClick={() => navigate("/login")}
+    className="px-3 py-1.5 rounded border"
+  >
+    Log in
+  </button>
+) : (
+  <>
+    {/* Desktop & Tablet */}
+    <span className="hidden sm:block text-sm text-gray-600 truncate max-w-[180px]">
+      Hi, {user.name}
+    </span>
+
+    {/* Mobile Only */}
+    <div className="sm:hidden w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center text-sm font-semibold">
+      {getInitials(user.name)}
+    </div>
+  </>
+)}
       </header>
 
       {/* DRAWER OVERLAY (ALL DEVICES) */}
@@ -247,7 +271,10 @@ export default function Header({ onNewChat, onOpenHistorySession }: Props) {
 
               <button
                 className="w-full text-left px-3 py-2 hover:bg-gray-50"
-                onClick={() => setShowAccount(true)}
+                onClick={() => {
+  navigate("/account");
+  setMenuOpen(false);
+}}
               >
                 Account
               </button>
@@ -283,9 +310,7 @@ export default function Header({ onNewChat, onOpenHistorySession }: Props) {
         </div>
       )}
 
-      {showAccount && (
-        <AccountModal onClose={() => setShowAccount(false)} />
-      )}
+     
     </>
   );
 }
